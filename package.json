@@ -1,0 +1,104 @@
+{
+    "name": "typescript-node-module",
+    "version": "1.0.0",
+    "description": "Typescript node module template",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "test": "jest",
+    "repository": "mvaldesdeleon/typescript-node-module",
+    "keywords": [
+        "typescript",
+        "node",
+        "module",
+        "template",
+        "boilerplate",
+        "jest",
+        "commitizen",
+        "commitlint",
+        "prettier",
+        "tslint",
+        "githooks",
+        "conventional commits",
+        "gitflow"
+    ],
+    "author": "Martín Valdés de León <m.valdesdeleon@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "clean": "rimraf lib",
+        "start": "node lib/index.js",
+        "inspect": "node --inspect=0.0.0.0 lib/index.js",
+        "build": "npm run lint && npm run clean && npm run build-ts",
+        "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+        "release": "standard-version",
+        "commit": "git-cz",
+        "recommit": "git-cz --retry",
+        "build-ts": "tsc",
+        "watch-ts": "tsc -w",
+        "test": "jest --coverage --verbose --passWithNoTests",
+        "watch-test": "npm run test -- --watchAll",
+        "lint": "tslint -c tslint.json -p tsconfig.json",
+        "tslint-check": "tslint-config-prettier-check ./tslint.json",
+        "watch-node": "nodemon lib/index.js",
+        "debug": "npm run build && npm run watch-debug",
+        "debug-node": "nodemon --inspect lib/index.js",
+        "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run debug-node\"",
+        "prepublishOnly": "npm run build",
+        "postinstall": "git config commit.template .gitmessage",
+        "repl": "ts-node",
+        "format": "prettier --config prettier.config.js --write src/**/*.{ts,json,md} *.{ts,js,json,md}",
+        "format-check": "prettier --config prettier.config.js --list-different src/**/*.{ts,json,md} *.{ts,js,json,md}"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^7.0.0",
+        "@commitlint/config-conventional": "^7.0.1",
+        "@types/jest": "^23.3.0",
+        "@types/node": "^10.5.2",
+        "commitizen": "^2.10.1",
+        "concurrently": "^3.6.0",
+        "cz-conventional-changelog": "2.1.0",
+        "git-branch-is": "^2.0.0",
+        "husky": "^1.0.0-rc.13",
+        "jest": "^23.4.1",
+        "lint-staged": "^7.2.0",
+        "nodemon": "^1.18.3",
+        "pre-push-valid": "^1.0.0",
+        "prettier": "1.13.7",
+        "rimraf": "^2.6.2",
+        "standard-version": "^4.4.0",
+        "ts-jest": "^23.0.1",
+        "ts-node": "^7.0.0",
+        "tslint": "^5.11.0",
+        "tslint-config-prettier": "^1.14.0",
+        "typescript": "^2.9.2"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
+            "pre-push": "(echo \"$HUSKY_GIT_STDIN\" | pre-push-valid) && npm run lint"
+        }
+    },
+    "lint-staged": {
+        "*.{ts,js,json,md}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "config": {
+        "commitizen": {
+            "path": "node_modules/cz-conventional-changelog"
+        }
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "standard-version": {
+        "tagPrefix": "",
+        "scripts": {
+            "prerelease": "git-branch-is master && [ -z \"$(git status --porcelain)\" ]",
+            "posttag": "git add . && git push --follow-tags"
+        }
+    }
+}
