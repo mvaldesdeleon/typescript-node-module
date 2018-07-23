@@ -8,6 +8,18 @@ Loosley based other boilerplates I looked at for _inspiration_, namely https://g
 
 Just clone/fork and start coding. Make any changes you need. Feel free to suggest any ideas or improvements, but keep in mind this is _very opinionated_, so while I will for sure appreciate the discussion, it's very likely I will not take many PRs.
 
+## Manual process
+
+```sh
+mkdir cool-module
+cd cool-module
+git init
+git remote add upstream git@github.com:mvaldesdeleon/typescript-node-module.git
+git pull upstream master
+git remote add origin git@github.com:youareawesome/cool-module
+git push -u origin master
+```
+
 # Philosophy
 
 When working in large teams/enterprises, consistency is key. And in our everyday chores as a developer, there are many places to be inconsistent.
